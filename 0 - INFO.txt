@@ -1,0 +1,4 @@
+quando aggiungo un product nella classe carrello product viene inserito un null poi la quantità
+in CarrelloProdotto ho un setCarrello e un setProdotto vuoti, se le inizializzo e provo di nuovo nelle tabelle non ottengo più nulla
+Nella classe BeatsDao inserisco gli id nel costruttore, da quello che ho capito forse non dovrei farlo.
+Per questo uso merge anzichè persist nel baseDao.

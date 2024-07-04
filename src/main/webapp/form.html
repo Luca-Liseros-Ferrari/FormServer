@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form</title>
+</head>
+<body>
+<form id="personForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="age">Age:</label>
+    <input type="text" id="age" name="age"><br><br>
+    <button type="submit">Save</button>
+</form>
+
+<script>
+    document.getElementById("personForm").addEventListener
+    ("submit", function(event) {
+        event.preventDefault(); // Evita l'invio del modulo predefinito
+
+        // Recupera i dati dal modulo
+        var name = document.getElementById("name").value;
+        var age = document.getElementById("age").value;
+
+        // Crea l'oggetto dati per l'invio come JSON
+        var data = {
+            name: name,
+            age: age
+        };
+
+        // Esegui la richiesta POST utilizzando l'API Fetch
+        fetch("http://localhost:8080/midoripol/persons", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(function(response) {
+                if (response.ok) {
+                    // Persistenza riuscita
+                    console.log("Persistenza riuscita");
+                } else {
+                    // Persistenza fallita
+                    console.log("Persistenza fallita");
+                }
+            })
+            .catch(function(error) {
+                console.log("Errore durante la richiesta:", error);
+            });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: Midori;
+    src: url(../src/font/Midori.woff);
+    src: url(../src/font/Midori.woff2);
+}
+body {
+    font-family: Midori;
+    font-size: 34px;
+}

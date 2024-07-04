@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BEATS </title>
+</head>
+<body>
+<h1>Lista Prodotti Beats</h1>
+<ul id="productList"></ul>
+<script>
+
+    // get products
+    function getProducts() {
+        fetch('/midoripol/beats')
+            .then(response => response.json())
+            .then(data => {
+                displayProducts(data);
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore:', error);
+            });
+    }
+
+    // display products
+    function displayProducts(products) {
+        const productList = document.getElementById('productList');
+
+        productList.innerHTML = '';
+
+        products.forEach(product => {
+            console.log(product);
+            const listItem = document.createElement('li');
+            const btn = document.createElement('button');
+            btn.innerHTML = "add product"
+            listItem.textContent = `
+            ${product.id}: ${product.nome} -
+            categoria  ${product.categoriaNuovoProdotto} - Prezzo: ${product.prezzo} - `;
+            listItem.append(btn)
+
+            btn.addEventListener ('click', function() {
+                const productId = product.id;
+                const quantita = product.quantita;
+                const categoria = product.categoriaNuovoProdotto;
+                addProductToCart (productId, quantita, categoria);
+            });
+            productList.append (listItem);
+        });
+    }
+
+    window.onload = getProducts;
+
+
+    // adding product
+    function addProductToCart(productId, quantita, categoria) {
+        const data = {
+            id: parseInt(productId),
+            quantita: quantita,
+            categoriaNuovoProdotto: categoria
+        };
+
+        console.log('Data sent to server:', data); // Stampa i dati inviati al server
+
+        fetch('/midoripol/carrello/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Prodotto aggiunto con successo al carrello.');
+                    alert('Prodotto aggiunto con successo al carrello.');
+                } else {
+                    console.error('Errore durante l\'aggiunta del product al carrello.');
+                    alert('Errore durante l\'aggiunta del product al carrello.');
+                }
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore durante la richiesta:', error);
+                alert('Si è verificato un errore durante la richiesta. Si prega di riprovare più tardi.');
+            });
+    }
+
+
+</script>
+
+</body>
+</html>

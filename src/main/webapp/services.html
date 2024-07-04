@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Midori Pol - Servizi</title>
+</head>
+<body>
+<h2>Mixing-Mastering</h2>
+<form id="emailForm">
+    <label for="mittenteEmail">mittente Email:</label>
+    <input type="email" id="mittenteEmail" name="recipientEmail" required><br><br>
+
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required><br><br>
+
+    <label for="messageBody">Message Body:</label><br>
+    <textarea id="messageBody" name="messageBody" rows="4" cols="50" required></textarea><br><br>
+
+    <input type="submit" value="Send Email">
+</form>
+
+<script>
+    document.getElementById('emailForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Previene il comportamento predefinito del modulo di invio
+
+        var formData = {
+            mittenteEmail: document.getElementById('mittenteEmail').value,
+            subject: document.getElementById('subject').value,
+            messageBody: document.getElementById('messageBody').value
+        };
+
+        fetch('/midoripol/services/sendemail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("Errore durante l'invio della richiesta");
+                }
+                // Gestisci la risposta del server qui se necessario
+            })
+            .catch(function(error) {
+                console.error('Errore:', error);
+            });
+    });
+</script>
+</body>
+</html>
