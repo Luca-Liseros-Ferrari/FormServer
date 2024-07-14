@@ -11,6 +11,7 @@ public class PersonList {
     private Long id;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_list_id")
     private List<Person> persons = new ArrayList<>();
 
     public Long getId() {

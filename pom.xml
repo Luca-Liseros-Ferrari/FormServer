@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.midori_pol</groupId>
-  <artifactId>MIDORI_POL</artifactId>
+  <artifactId>esame</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
